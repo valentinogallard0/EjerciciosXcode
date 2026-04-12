@@ -12,7 +12,7 @@ struct _026_ChallengesApp: App {
     var viewModel = C02_7_UserViewModel()
     var body: some Scene {
         WindowGroup {
-            C04_2_ListView()
+            ContactListView()
         }
     }
 }
