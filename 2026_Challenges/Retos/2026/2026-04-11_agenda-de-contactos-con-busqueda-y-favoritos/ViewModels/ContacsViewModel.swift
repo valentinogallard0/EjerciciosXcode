@@ -16,9 +16,15 @@ class ContacsViewModel: ObservableObject {
         .init(name: "Bob Johnson", email: "bob@example.com", phone: "+6655443322", isFavorite: false, category: .personal)
     ]
     
-    func addContact(name: String, email: String, phone: String, category: Category_01) {
+    func addContact(name: String, email: String, phone: String, category: Category_01, favorite: Bool) {
         guard !name.isEmpty, !email.isEmpty, !phone.isEmpty else { return }
-        let contact = Contact(name: name, email: email, phone: phone, category: category)
+        let contact = Contact(
+            name: name,
+            email: email,
+            phone: phone,
+            isFavorite: favorite,
+            category: category
+        )
         contacts.append(contact)
     }
     

@@ -12,6 +12,7 @@ struct FormContactView: View {
     @State private var email: String = ""
     @State private var phone: String = ""
     @State private var category: Category_01 = .personal
+    @State private var favorite: Bool = false
     var viewModel: ContacsViewModel
     var body: some View {
         NavigationStack {
@@ -34,6 +35,8 @@ struct FormContactView: View {
                         }
                         .pickerStyle(.segmented)
                     }
+                    Toggle("Favorito", isOn: $favorite)
+                        .toggleStyle(.switch)
                 }
             }
             .navigationTitle("Nuevo Contacto")
@@ -50,7 +53,8 @@ struct FormContactView: View {
                             name: self.name,
                             email: self.email,
                             phone: self.phone,
-                            category: self.category
+                            category: self.category,
+                            favorite: self.favorite
                         )
                     }
                 }
