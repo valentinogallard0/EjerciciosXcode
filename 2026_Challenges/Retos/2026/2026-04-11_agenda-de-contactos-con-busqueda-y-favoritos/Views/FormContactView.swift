@@ -15,50 +15,73 @@ struct FormContactView: View {
     @State private var favorite: Bool = false
     var viewModel: ContacsViewModel
     var body: some View {
-        NavigationStack {
-            VStack {
-                Form {
-                    Section("Nombre") {
-                        TextField("Nombre del contacto", text: self.$name)
-                    }
-                    Section("Email") {
-                        TextField("Correo del contacto", text: self.$email)
-                    }
-                    Section("Numero") {
-                        TextField("Numero del contacto", text: self.$phone)
-                    }
-                    Section("Categoria") {
-                        Picker("Categoria", selection: self.$category) {
-                            ForEach(Category_01.allCases, id: \.self) { c in
-                                Text(c.rawValue)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                    }
-                    Toggle("Favorito", isOn: $favorite)
-                        .toggleStyle(.switch)
+        VStack {
+            HStack {
+                Button {
+                    self.dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
                 }
+                .buttonStyle(.glass)
+                Text("Nuevo Contacto")
+                    .font(.title2.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Spacer()
+                Button("Guardar") {
+                    self.viewModel.addContact(
+                        name: self.name,
+                        email: self.email,
+                        phone: self.phone,
+                        category: self.category,
+                        favorite: self.favorite)
+                }
+                .buttonStyle(.bordered)
             }
-            .navigationTitle("Nuevo Contacto")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Cancelar") {
-                        self.dismiss()
+            .padding()
+            Divider()
+            
+            VStack(spacing: 10) {
+                TextFieldComponent(
+                    title: "Nombre",
+                    placeholder: "Ingresa el nombre del contacto",
+                    icon: "person",
+                    text: self.$name
+                )
+                
+                TextFieldComponent(
+                    title: "Email",
+                    placeholder: "Ingresa el email del contacto",
+                    icon: "envelope",
+                    text: self.$email
+                )
+                
+                TextFieldComponent(
+                    title: "Numero",
+                    placeholder: "Ingresa el numero del contacto",
+                    icon: "phone",
+                    text: self.$phone
+                )
+                
+                Picker("Categoria del contacto", selection: self.$category) {
+                    ForEach(Category_01.allCases, id: \.self) { c in
+                        Text(c.rawValue)
                     }
                 }
-                ToolbarItem(placement: .bottomBar) {
-                    Button("Guardar") {
-                        self.viewModel.addContact(
-                            name: self.name,
-                            email: self.email,
-                            phone: self.phone,
-                            category: self.category,
-                            favorite: self.favorite
-                        )
-                    }
+                .pickerStyle(.segmented)
+                
+                HStack {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                        .font(.system(size: 10))
+                    Toggle("Marcar como favorito", isOn: self.$favorite)
                 }
+
+                                
             }
+            .padding(.horizontal)
+            
+            Spacer()
+            
         }
     }
 }
