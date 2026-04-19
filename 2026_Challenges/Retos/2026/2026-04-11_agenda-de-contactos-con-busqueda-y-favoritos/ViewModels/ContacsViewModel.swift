@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class ContacsViewModel: ObservableObject {
     @Published var contacts: [Contact] = [
@@ -28,12 +29,7 @@ class ContacsViewModel: ObservableObject {
         contacts.append(contact)
     }
     
-    func deleteContat(id: UUID) {
-        let contact = contacts.first(where: { $0.id == id })
-        if let contact {
-            contacts.removeAll(where: { $0.id == contact.id })
-        } else {
-            return
-        }
+    func deleteContat(at offsets: IndexSet) {
+        contacts.remove(atOffsets: offsets)
     }
 }
