@@ -29,3 +29,7 @@ struct ContactListView: View {
         }
     }
 }
+
+#Preview {
+    ContactListView(viewModel: ContacsViewModel())
+}
