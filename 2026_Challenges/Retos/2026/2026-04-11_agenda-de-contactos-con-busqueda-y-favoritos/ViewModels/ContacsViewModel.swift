@@ -17,6 +17,14 @@ class ContacsViewModel: ObservableObject {
         .init(name: "Bob Johnson", email: "bob@example.com", phone: "+6655443322", isFavorite: false, category: .personal)
     ]
     
+    func filteredText(searchText: String) -> [Contact] {
+        if searchText.isEmpty {
+            return contacts
+        }
+        
+        return contacts.filter {$0.name.contains(searchText)}
+    }
+    
     func addContact(name: String, email: String, phone: String, category: Category_01, favorite: Bool) {
         guard !name.isEmpty, !email.isEmpty, !phone.isEmpty else { return }
         let contact = Contact(

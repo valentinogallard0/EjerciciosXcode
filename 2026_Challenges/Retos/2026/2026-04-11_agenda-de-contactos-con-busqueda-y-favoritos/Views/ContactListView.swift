@@ -2,7 +2,8 @@ import SwiftUI
 
 struct ContactListView: View {
     @StateObject var viewModel = ContacsViewModel()
-    @State  private var showFormSheet: Bool = false
+    @State private var showFormSheet: Bool = false
+    @State private var searchText: String = ""
     var body: some View {
         NavigationStack {
             VStack {
@@ -12,6 +13,7 @@ struct ContactListView: View {
                         icon: "person",
                         caption: "Lista vacia, para agregar un nuevo contacto haz clic en el boton +")
                 } else {
+                    SearchBarComponentView(searchText: $searchText)
                     List {
                         ForEach($viewModel.contacts){ $contact in
                             ContactComponentView(contact: contact, isFavorite: $contact.isFavorite)
