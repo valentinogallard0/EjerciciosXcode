@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContactComponentView: View {
     let contact: Contact
-    @Binding var isFavorite: Bool
+    var onToggleFavorite: () -> Void
     var size: CGFloat = 50
     var color: Color = .blue
 
@@ -37,11 +37,11 @@ struct ContactComponentView: View {
             
             Button {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
-                    isFavorite.toggle()
+                    onToggleFavorite()
                 }
             } label: {
-                Image(systemName: isFavorite ? "star.fill" : "star")
-                    .foregroundStyle(isFavorite ? .yellow : .gray)
+                Image(systemName: contact.isFavorite ? "star.fill" : "star")
+                    .foregroundStyle(contact.isFavorite ? .yellow : .gray)
             }
         }
     }

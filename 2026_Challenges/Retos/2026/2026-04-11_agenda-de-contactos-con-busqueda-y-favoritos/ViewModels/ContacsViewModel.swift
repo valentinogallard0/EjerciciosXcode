@@ -11,31 +11,76 @@ import SwiftUI
 
 class ContacsViewModel: ObservableObject {
     @Published var contacts: [Contact] = [
-        .init(name: "John Doe", email: "john@example.com", phone: "+1234567890", isFavorite: true, category: .work),
-        .init(name: "Jane Doe", email: "jane@example.com", phone: "+0987654321", isFavorite: false, category: .personal),
-        .init(name: "Alice Smith", email: "alice@example.com", phone: "+1122334455", isFavorite: true, category: .work),
-        .init(name: "Bob Johnson", email: "bob@example.com", phone: "+6655443322", isFavorite: false, category: .personal)
+        .init(name: "John Doe", email: "john@example.com", phone: "1234567890", isFavorite: true, category: .work),
+        .init(name: "Jane Doe", email: "jane@example.com", phone: "0987654321", isFavorite: false, category: .personal),
+        .init(name: "Alice Smith", email: "alice@example.com", phone: "1122334455", isFavorite: true, category: .work),
+        .init(name: "Bob Johnson", email: "bob@example.com", phone: "6655443322", isFavorite: false, category: .personal)
     ]
+    @Published var nameError: String? = nil
+    @Published var emailError: String? = nil
+    @Published var phoneError: String? = nil
     
     func filteredText(searchText: String) -> [Contact] {
         if searchText.isEmpty {
             return contacts
         }
+        let normalizedSearchText = searchText.lowercased()
         
-        return contacts.filter {$0.name.contains(searchText)}
+        return contacts.filter {$0.name.lowercased().contains(normalizedSearchText) || $0.email.contains(searchText) || String($0.phone).contains(searchText) }
     }
     
-    func addContact(name: String, email: String, phone: String, category: Category_01, favorite: Bool) {
-        guard !name.isEmpty, !email.isEmpty, !phone.isEmpty else { return }
+    func toggleFavorite(contact: Contact) {
+        if let index = contacts.firstIndex(where: { $0.id == contact.id }) {
+            contacts[index].isFavorite.toggle()
+        }
+    }
+    
+    func addContact(name: String, email: String, phone: String, category: Category_01, favorite: Bool) -> Bool {
+        nameError = nil
+        emailError = nil
+        phoneError = nil
+
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedPhone = phone.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        var hasErrors = false
+
+        if trimmedName.isEmpty {
+            nameError = CreateContactError.emptyName.description
+            hasErrors = true
+        }
+
+        if trimmedEmail.isEmpty {
+            emailError = CreateContactError.emptyEmail.description
+            hasErrors = true
+        } else if !trimmedEmail.contains("@") {
+            emailError = CreateContactError.invalidEmail.description
+            hasErrors = true
+        }
+
+        if trimmedPhone.isEmpty {
+            phoneError = CreateContactError.emptyPhone.description
+            hasErrors = true
+        } else if trimmedPhone.count != 10 {
+            phoneError = CreateContactError.invalidNumberLength.description
+            hasErrors = true
+        }
+
+        if hasErrors { return false }
+
         let contact = Contact(
-            name: name,
-            email: email,
-            phone: phone,
+            name: trimmedName,
+            email: trimmedEmail,
+            phone: trimmedPhone,
             isFavorite: favorite,
             category: category
         )
+
         contacts.append(contact)
+        return true
     }
+
     
     func deleteContat(at offsets: IndexSet) {
         contacts.remove(atOffsets: offsets)

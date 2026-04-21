@@ -15,8 +15,10 @@ struct ContactListView: View {
                 } else {
                     SearchBarComponentView(searchText: $searchText)
                     List {
-                        ForEach($viewModel.contacts){ $contact in
-                            ContactComponentView(contact: contact, isFavorite: $contact.isFavorite)
+                        ForEach(viewModel.filteredText(searchText: self.searchText)){ contact in
+                            ContactComponentView(contact: contact) {
+                                viewModel.toggleFavorite(contact: contact)
+                            }
                         }
                         .onDelete { offsets in
                             viewModel.deleteContat(at: offsets)

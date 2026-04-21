@@ -13,7 +13,7 @@ struct FormContactView: View {
     @State private var phone: String = ""
     @State private var category: Category_01 = .personal
     @State private var favorite: Bool = false
-    var viewModel: ContacsViewModel
+    @ObservedObject var viewModel: ContacsViewModel
     var body: some View {
         VStack {
             HStack {
@@ -28,23 +28,26 @@ struct FormContactView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Spacer()
                 Button("Guardar") {
-                    self.viewModel.addContact(
+                    let success = self.viewModel.addContact(
                         name: self.name,
                         email: self.email,
                         phone: self.phone,
                         category: self.category,
-                        favorite: self.favorite)
+                        favorite: self.favorite
+                    )
+                    if success { self.dismiss() }
                 }
                 .buttonStyle(.bordered)
             }
             .padding()
             Divider()
             
-            VStack(spacing: 10) {
+            VStack(spacing: 20) {
                 TextFieldComponent(
                     title: "Nombre",
                     placeholder: "Ingresa el nombre del contacto",
                     icon: "person",
+                    error: viewModel.nameError,
                     text: self.$name
                 )
                 
@@ -52,6 +55,7 @@ struct FormContactView: View {
                     title: "Email",
                     placeholder: "Ingresa el email del contacto",
                     icon: "envelope",
+                    error: viewModel.emailError,
                     text: self.$email
                 )
                 
@@ -59,6 +63,7 @@ struct FormContactView: View {
                     title: "Numero",
                     placeholder: "Ingresa el numero del contacto",
                     icon: "phone",
+                    error: viewModel.phoneError,
                     text: self.$phone
                 )
                 
