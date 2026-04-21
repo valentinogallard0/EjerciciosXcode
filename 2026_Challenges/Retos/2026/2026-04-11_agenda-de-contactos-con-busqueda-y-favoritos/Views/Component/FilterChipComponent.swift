@@ -19,7 +19,7 @@ struct FilterChipComponent: View {
                 .font(.subheadline)
                 .padding(.horizontal, 14)
                 .padding(.vertical, 8)
-                .background(self.isSelected ? Color.accentColor : Color(.systemGray6))
+                .background(self.isSelected ? Color.green : Color(.systemGray6))
                 .foregroundStyle(isSelected ? .white : .primary)
                 .clipShape(Capsule())
         }
@@ -27,5 +27,5 @@ struct FilterChipComponent: View {
 }
 
 #Preview {
-    FilterChipComponent(label: "Filter", isSelected: false, action: {})
+    FilterChipComponent(label: "Filter", isSelected: true, action: {})
 }
