@@ -4,6 +4,8 @@ struct ContactListView: View {
     @StateObject var viewModel = ContacsViewModel()
     @State private var showFormSheet: Bool = false
     @State private var searchText: String = ""
+    @State private var selectedCategory: Category_01? = nil
+    @State private var showOnlyFavorites: Bool = false
     var body: some View {
         NavigationStack {
             VStack {
@@ -14,8 +16,16 @@ struct ContactListView: View {
                         caption: "Lista vacia, para agregar un nuevo contacto haz clic en el boton +")
                 } else {
                     SearchBarComponentView(searchText: $searchText)
+                    FiltersSectionView(
+                        showOnlyFavorites: $showOnlyFavorites,
+                        selectedCategory: $selectedCategory
+                    )
                     List {
-                        ForEach(viewModel.filteredText(searchText: self.searchText)){ contact in
+                        ForEach(viewModel.filteredContacts(
+                            searchText: self.searchText,
+                            category: self.selectedCategory,
+                            onlyFavorites: self.showOnlyFavorites)
+                        ){ contact in
                             ContactComponentView(contact: contact) {
                                 viewModel.toggleFavorite(contact: contact)
                             }

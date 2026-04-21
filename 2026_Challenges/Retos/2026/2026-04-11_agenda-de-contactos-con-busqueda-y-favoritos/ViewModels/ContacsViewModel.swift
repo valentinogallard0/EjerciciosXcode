@@ -19,14 +19,27 @@ class ContacsViewModel: ObservableObject {
     @Published var nameError: String? = nil
     @Published var emailError: String? = nil
     @Published var phoneError: String? = nil
-    
-    func filteredText(searchText: String) -> [Contact] {
-        if searchText.isEmpty {
-            return contacts
+    @Published var isFiltersActive: Bool = false
+    @Published var selectedCategory: Category_01? = nil
+    @Published var showOnlyFavorites: Bool = false
+
+    func filteredContacts(searchText: String, category: Category_01?, onlyFavorites: Bool) -> [Contact] {
+        contacts.filter { contact in
+            let textMatch: Bool
+            if searchText.isEmpty {
+                textMatch = true
+            } else {
+                let query = searchText.lowercased()
+                textMatch = contact.name.lowercased().contains(query)
+                || contact.email.lowercased().contains(query)
+                || contact.phone.lowercased().contains(query)
+            }
+            
+            let categoryMatch = category == nil || contact.category == category
+            let favoriteMatch = !onlyFavorites || contact.isFavorite
+            
+            return textMatch && categoryMatch && favoriteMatch
         }
-        let normalizedSearchText = searchText.lowercased()
-        
-        return contacts.filter {$0.name.lowercased().contains(normalizedSearchText) || $0.email.contains(searchText) || String($0.phone).contains(searchText) }
     }
     
     func toggleFavorite(contact: Contact) {
