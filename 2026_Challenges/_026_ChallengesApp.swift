@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct _026_ChallengesApp: App {
-    var viewModel = C02_7_UserViewModel()
     var body: some Scene {
         WindowGroup {
-            ContactListView()
+            ContentViewHabit()
         }
+        .modelContainer(for: [Habit.self, HabitEntry.self])
     }
 }
 
