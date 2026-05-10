@@ -23,7 +23,7 @@ struct ProductListView: View {
                 .font(.title.bold())
             Spacer()
             
-            CartBadgeView(count: viewModel.cartItems.count) {
+            CartBadgeView(count: viewModel.badgeCount) {
                 self.showCartView.toggle()
             }
         }

@@ -12,6 +12,10 @@ class ProductListViewModel: ObservableObject {
     @Published var products: [Product]
     @Published var cartItems: [CartItem] = []
     
+    var badgeCount: Int {
+        cartItems.reduce(0) { $0 + $1.cantidad }
+    }
+    
     init(
         products: [Product] = MockProducts.products
     ) {
