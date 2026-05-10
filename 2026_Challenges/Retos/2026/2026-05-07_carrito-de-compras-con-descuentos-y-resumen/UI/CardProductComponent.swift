@@ -10,17 +10,29 @@ import Foundation
 
 struct CardProductComponent: View {
     
-    @Binding var product: Product
+    var product: Product
+    var agregarAlCarrito: () -> Void
     
     var body: some View {
         GlassEffectContainer {
-            VStack(alignment: .leading, spacing: 10) {
-                Text(product.name)
-                    .font(.title.bold())
-                Text(product.description)
+            HStack {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(product.name)
+                        .font(.title3.bold())
+                        .multilineTextAlignment(.leading)
+                    Text(product.description)
+                        .font(.caption)
+                        .multilineTextAlignment(.leading)
+                    categoryPill
+                    
+                    Button("Agregar al carrito") {
+                        agregarAlCarrito()
+                    }
+                    .buttonStyle(.glassProminent)
+                    .tint(Color(.green).opacity(0.9))
                     .font(.caption)
-                    .multilineTextAlignment(.leading)
-                categoryPill
+                }
+                
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -35,7 +47,9 @@ struct CardProductComponent: View {
     
     private var categoryPill: some View {
         HStack {
-            Image(systemName: product.category.icon)
+            if !product.category.icon.isEmpty {
+                Image(systemName: product.category.icon)
+            }
             Text(product.category.name)
         }
         .padding(8)
@@ -50,12 +64,14 @@ struct CardProductComponent: View {
 
 #Preview {
     CardProductComponent(
-        product: .constant(Product(
+        product: Product(
             id: UUID(),
             name: "iPhone 17 Pro",
             description: "Lo ultimo en tecnologia, el iPhone 17 Pro es lo que ofrece en la gamma mas alta de la empresa de Apple",
             category: .tecnology,
             price: 35000
-        ))
-    )
+        )
+    ) {
+        
+    }
 }

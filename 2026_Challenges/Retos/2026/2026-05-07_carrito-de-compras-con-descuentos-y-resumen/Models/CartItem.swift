@@ -7,18 +7,19 @@
 
 import SwiftUI
 
-struct CartItem {
+struct CartItem: Identifiable {
+    var id: UUID { product.id }
     var product: Product
     var cantidad: Int
-    var subTotal: Double
+    var subTotal: Double {
+        product.price * Double(cantidad)
+    }
     
     init(
         product: Product,
         cantidad: Int,
-        subTotal: Double
     ) {
         self.product = product
         self.cantidad = cantidad
-        self.subTotal = subTotal
     }
 }

@@ -14,19 +14,19 @@
 		806DA7892F14500000A86052 /* Exceptions for "2026_Challenges" folder in "2026_Challenges" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Retos/2026/2026-04-11_agenda-de-contactos-con-busqueda-y-favoritos/PROGRESO_Contacts.md",
+				"Retos/2026/2026-04-11_agenda-de-contactos-con-busqueda-y-favoritos/RETO_Contacts.md",
+				"Retos/2026/2026-04-11_agenda-de-contactos-con-busqueda-y-favoritos/RETRO_Contacts.md",
+				"Retos/2026/2026-04-21_tracker-de-habitos-semanales-con-rachas-y-progreso/PROGRESO.md",
+				"Retos/2026/2026-04-21_tracker-de-habitos-semanales-con-rachas-y-progreso/RETO.md",
+				"Retos/2026/2026-04-21_tracker-de-habitos-semanales-con-rachas-y-progreso/RETRO.md",
+				"Retos/2026/2026-05-07_carrito-de-compras-con-descuentos-y-resumen/PROGRESO.md",
+				"Retos/2026/2026-05-07_carrito-de-compras-con-descuentos-y-resumen/RETO.md",
+				"Retos/2026/2026-05-07_carrito-de-compras-con-descuentos-y-resumen/RETRO.md",
+				"Retos/2026/2026-05-07_explorador-de-paises-con-busqueda-detalle-y-favoritos/PROGRESO.md",
+				"Retos/2026/2026-05-07_explorador-de-paises-con-busqueda-detalle-y-favoritos/RETO.md",
+				"Retos/2026/2026-05-07_explorador-de-paises-con-busqueda-detalle-y-favoritos/RETRO.md",
 				Retos/README.md,
-				Retos/2026/2026-04-11_agenda-de-contactos-con-busqueda-y-favoritos/PROGRESO_Contacts.md,
-				Retos/2026/2026-04-11_agenda-de-contactos-con-busqueda-y-favoritos/RETO_Contacts.md,
-				Retos/2026/2026-04-11_agenda-de-contactos-con-busqueda-y-favoritos/RETRO_Contacts.md,
-				Retos/2026/2026-04-21_tracker-de-habitos-semanales-con-rachas-y-progreso/PROGRESO.md,
-				Retos/2026/2026-04-21_tracker-de-habitos-semanales-con-rachas-y-progreso/RETO.md,
-				Retos/2026/2026-04-21_tracker-de-habitos-semanales-con-rachas-y-progreso/RETRO.md,
-				Retos/2026/2026-05-07_carrito-de-compras-con-descuentos-y-resumen/PROGRESO.md,
-				Retos/2026/2026-05-07_carrito-de-compras-con-descuentos-y-resumen/RETO.md,
-				Retos/2026/2026-05-07_carrito-de-compras-con-descuentos-y-resumen/RETRO.md,
-				Retos/2026/2026-05-07_explorador-de-paises-con-busqueda-detalle-y-favoritos/PROGRESO.md,
-				Retos/2026/2026-05-07_explorador-de-paises-con-busqueda-detalle-y-favoritos/RETO.md,
-				Retos/2026/2026-05-07_explorador-de-paises-con-busqueda-detalle-y-favoritos/RETRO.md,
 			);
 			target = 806DA77C2F144F8F00A86052 /* 2026_Challenges */;
 		};

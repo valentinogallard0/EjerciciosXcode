@@ -10,7 +10,7 @@ import SwiftUI
 
 class ProductListViewModel: ObservableObject {
     @Published var products: [Product]
-    @Published var cartItems: [Product] = []
+    @Published var cartItems: [CartItem] = []
     
     init(
         products: [Product] = MockProducts.products
@@ -19,7 +19,11 @@ class ProductListViewModel: ObservableObject {
     }
     
     func addProductToCart(product: Product) {
-        cartItems.append(product)
+        if let index = cartItems.firstIndex(where: { $0.product.id == product.id}) {
+            cartItems[index].cantidad += 1
+        } else {
+            cartItems.append(CartItem(product: product, cantidad: 1))
+        }
     }
     
     /*
