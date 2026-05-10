@@ -9,15 +9,17 @@ import SwiftUI
 
 struct CartView: View {
     
-    var cartItems: [CartItem] = []
+    var viewModel: ProductListViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationStack {
             VStack {
-                ForEach(cartItems) { item in
+                ForEach(viewModel.cartItems) { item in
                     CartProductListView(cartItem: item)
                 }
+                Spacer()
+                Text("Total \(self.viewModel.total)")
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

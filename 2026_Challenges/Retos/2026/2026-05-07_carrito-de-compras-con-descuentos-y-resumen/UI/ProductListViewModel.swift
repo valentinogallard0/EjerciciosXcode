@@ -16,6 +16,10 @@ class ProductListViewModel: ObservableObject {
         cartItems.reduce(0) { $0 + $1.cantidad }
     }
     
+    var total: Double {
+        cartItems.reduce(0) { $0 + ($1.subTotal)}
+    }
+    
     init(
         products: [Product] = MockProducts.products
     ) {

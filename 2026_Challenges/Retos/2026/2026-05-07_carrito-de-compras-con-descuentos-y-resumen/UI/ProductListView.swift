@@ -38,7 +38,7 @@ struct ProductListView: View {
             }
         }
         .fullScreenCover(isPresented: $showCartView) {
-            CartView(cartItems: viewModel.cartItems)
+            CartView(viewModel: viewModel)
         }
     }
 }

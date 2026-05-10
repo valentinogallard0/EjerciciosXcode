@@ -12,11 +12,18 @@ struct CartProductListView: View {
     var cartItem: CartItem
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 10) {
             Text("\(self.cartItem.product.name)")
+                .font(.title3.bold())
             Text("Cantidad: \(self.cartItem.cantidad)")
-            Text("\(self.cartItem.product.price)")
+                .font(.caption)
+            Text("Subtotal - $\(self.cartItem.subTotal, specifier: "%.0f")")
+                .font(.footnote.bold())
+            
+            Divider()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
     }
 }
 
