@@ -38,7 +38,8 @@ struct CartProductListView: View {
                     Image(systemName: "plus")
                 }
             }
-            .padding(.horizontal)
+            .buttonStyle(.plain)
+            .padding()
         }
     }
 }
