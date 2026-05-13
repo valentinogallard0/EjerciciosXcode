@@ -34,10 +34,19 @@ class ProductListViewModel: ObservableObject {
         }
     }
     
-    /*
-     func deleteProductFromCart(at offsets: IndexSet) {
-         guard cartItems.isEmpty == false else { return }
-         products.remove(atOffsets: offsets)
-     }
-     */
+    func removeQuantity(cartItem: CartItem) {
+        if let index = cartItems.firstIndex(where: {$0.id == cartItem.id}) {
+            if cartItems[index].cantidad > 1 {
+                cartItems[index].cantidad -= 1
+            } else {
+                cartItems.remove(at: index)
+            }
+        }
+    }
+    
+    func removeCartItem(_ cartItem: CartItem) {
+        cartItems.removeAll { $0.id == cartItem.id}
+    }
+
+     
 }
