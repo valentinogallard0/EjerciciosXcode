@@ -25,8 +25,8 @@ Una mini experiencia de carrito con:
 - Una lista de productos disponibles cargados desde datos mock. [X]
 - Una accion para agregar productos al carrito. [X]
 - Un control para aumentar y disminuir cantidad por producto. [X]
-- Una opcion para eliminar un producto del carrito.[...]
-- Un selector o control simple para aplicar un descuento al carrito.
+- Una opcion para eliminar un producto del carrito.[X]
+- Un selector o control simple para aplicar un descuento al carrito[...]
 - Un resumen con subtotal, descuento aplicado y total final.
 - Un estado vacio cuando el carrito no tenga productos.
 
