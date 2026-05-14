@@ -11,13 +11,17 @@ import SwiftUI
 class ProductListViewModel: ObservableObject {
     @Published var products: [Product]
     @Published var cartItems: [CartItem] = []
+    @Published var discountSelected: Discount = .none
     
     var badgeCount: Int {
         cartItems.reduce(0) { $0 + $1.cantidad }
     }
     
     var total: Double {
-        cartItems.reduce(0) { $0 + ($1.subTotal)}
+        let subtotal = cartItems.reduce(0) { $0 + ($1.subTotal)}
+        let discount = subtotal * discountSelected.value
+        let finalAmount = subtotal - discount
+        return finalAmount
     }
     
     init(
