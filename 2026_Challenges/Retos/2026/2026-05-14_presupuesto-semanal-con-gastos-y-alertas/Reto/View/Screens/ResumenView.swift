@@ -13,7 +13,7 @@ struct ResumenView: View {
         
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(alignment: .leading) {
                 Text("Week of Nov 11")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
@@ -39,26 +39,17 @@ struct ResumenView: View {
                 }
                 .padding(.horizontal)
                 .frame(maxWidth:.infinity)
-
-                Spacer()
                 
                 VStack {
-                    ForEach(viewModel.gastosSemana) { gasto in
-                        HStack {
-                            Text(gasto.title)
-                            Spacer()
-                            Text("\(gasto.amount, specifier: "%.2f")")
-                        }
-                    }
-                    
-                    HStack {
-                        Text("Total gastado: ")
-                        Spacer()
-                        Text("\(viewModel.totalGastado, specifier: "%.2f")")
-                    }
-                    .fontWeight(.semibold)
+                    Text("BY CATEGORY")
+                        .font(.callout)
+                        .fontWeight(.semibold)
                 }
-                .padding(.horizontal)
+                .padding()
+                
+                CategoryExpendComponent(viewModel: viewModel)
+                
+                Spacer()
             }
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {

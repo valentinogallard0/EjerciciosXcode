@@ -24,10 +24,10 @@ enum ExpenseCategory: String, CaseIterable {
     
     var icon: String {
         switch self {
-        case .food: return "🍚"
-        case .transport: return "🚌"
-        case .entertainment: return "🎬"
-        case .other: return "🤔"
+        case .food: return "fork.knife"
+        case .transport: return "car"
+        case .entertainment: return "popcorn.fill"
+        case .other: return "arrow.trianglehead.2.clockwise.rotate.90.circle"
         }
     }
     

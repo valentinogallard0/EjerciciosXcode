@@ -52,6 +52,10 @@ struct SpentWeekComponent: View {
         .foregroundStyle(viewModel.status.color)
     }
     
+    private var progressValue: Double {
+        min(max(viewModel.porcentajeGastado / 100, 0), 1)
+    }
+    
     private var restBar: some View {
         GeometryReader { geometry in
             ZStack(alignment: .leading) {
@@ -60,11 +64,11 @@ struct SpentWeekComponent: View {
                 
                 RoundedRectangle(cornerRadius: 12)
                     .fill(viewModel.status.color)
-                    .frame(width: geometry.size.width * (viewModel.porcentajeGastado/100))
+                    .frame(width: geometry.size.width * progressValue)
             }
         }
         .frame(height: 10)
-        .animation(.easeInOut, value: viewModel.porcentajeGastado)
+        .animation(.easeInOut, value: progressValue)
     }
 }
 

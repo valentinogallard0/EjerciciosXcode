@@ -16,6 +16,16 @@ class BudgetViewModel: ObservableObject {
         return gastos.filter {$0.createdAt >= hace7Dias }
     }
     
+    var totalByCatgory: [(category: ExpenseCategory, total: Double)] {
+        let grouped = Dictionary(grouping: gastosSemana, by: { $0.category })
+        
+        return grouped.map { category, expenses in
+            let total = expenses.reduce(0) { $0 + $1.amount }
+            return (category: category, total: total)
+        }
+        .sorted { $0.total > $1.total }
+    }
+    
     var diasTrackeados: Int {
         let hace7Dias = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
         
@@ -46,7 +56,8 @@ class BudgetViewModel: ObservableObject {
          
          totalGastado * 100 / presupuesto
          */
-        (totalGastado * 100) / presupuesto
+        guard presupuesto > 0 else { return 0 }
+        return (totalGastado * 100) / presupuesto
     }
     
     var porcentajeRestante: Double {
@@ -64,13 +75,16 @@ class BudgetViewModel: ObservableObject {
     }
     
     var highestSpend: Expense? {
-        if gastosSemana.isEmpty { return nil }
-        let gastoMasAlto = gastosSemana.max(by: { $0.amount < $1.amount })
+        let gastos = gastosSemana
+        if gastos.isEmpty { return nil }
+        let gastoMasAlto = gastos.max(by: { $0.amount < $1.amount })
         return gastoMasAlto
     }
     
     var promedio: Double {
-        gastosSemana.map { $0.amount }.reduce(0, +)/Double(gastosSemana.count)
+        let gastos = gastosSemana
+        guard !gastos.isEmpty else { return 0 }
+        return gastos.map { $0.amount }.reduce(0, +) / Double(gastos.count)
     }
     
     func agregarGasto(

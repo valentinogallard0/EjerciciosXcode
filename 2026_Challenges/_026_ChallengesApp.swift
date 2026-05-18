@@ -12,9 +12,9 @@ import SwiftData
 struct _026_ChallengesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentViewHabit()
+            ResumenView()
         }
-        .modelContainer(for: [Habit.self, HabitEntry.self])
+        //.modelContainer(for: [Habit.self, HabitEntry.self])
     }
 }
 
