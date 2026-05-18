@@ -6,33 +6,49 @@
 //
 import SwiftUI
 
-struct TestView: View {
+struct ResumenView: View {
     
     @StateObject var viewModel = BudgetViewModel()
     @State var showBudgetFormView: Bool = false
-    
+        
     var body: some View {
         NavigationStack {
             VStack {
-                VStack(alignment: .leading) {
-                    Text("Presupuesto Inicial: \(viewModel.presupuesto, specifier: "%.2f")")
-                        .font(.title2)
-                    Text("Presupuesto despues de gastos: \(viewModel.restante, specifier: "%.2f")")
-                        .font(.title2)
+                Text("Week of Nov 11")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                HStack {
+                    Text("Budget")
+                        .font(.title.bold())
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "sun.max")
+                    }
+                    .buttonStyle(.glass)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
                 
+                SpentWeekComponent(viewModel: viewModel)
+                    .padding(.horizontal)
+                
+                HStack {
+                    HighestSpentComponent(viewModel: viewModel)
+                    DailyAverageView(viewModel: viewModel)
+                }
+                .padding(.horizontal)
+                .frame(maxWidth:.infinity)
+
                 Spacer()
                 
                 VStack {
-                    ForEach(viewModel.gastos) { gasto in
+                    ForEach(viewModel.gastosSemana) { gasto in
                         HStack {
                             Text(gasto.title)
                             Spacer()
                             Text("\(gasto.amount, specifier: "%.2f")")
                         }
-                        .padding(.horizontal)
                     }
                     
                     HStack {
@@ -41,17 +57,17 @@ struct TestView: View {
                         Text("\(viewModel.totalGastado, specifier: "%.2f")")
                     }
                     .fontWeight(.semibold)
-                    .padding(.horizontal)
                 }
+                .padding(.horizontal)
             }
-            .navigationTitle("Presupuesto")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .bottomBar) {
                     Button {
                         showBudgetFormView = true
                     } label: {
                         Image(systemName: "plus")
                     }
+                    .frame(width: 50, height: 50)
                 }
             }
             .navigationDestination(isPresented: self.$showBudgetFormView) {
@@ -62,5 +78,5 @@ struct TestView: View {
 }
 
 #Preview {
-    TestView(viewModel: BudgetViewModel())
+    ResumenView(viewModel: BudgetViewModel())
 }
