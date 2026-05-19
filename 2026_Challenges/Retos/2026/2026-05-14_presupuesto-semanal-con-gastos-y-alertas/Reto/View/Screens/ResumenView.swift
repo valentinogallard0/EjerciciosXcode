@@ -62,7 +62,7 @@ struct ResumenView: View {
                 }
             }
             .navigationDestination(isPresented: self.$showBudgetFormView) {
-                BudgetFormView()
+                BudgetFormView(viewModel: viewModel)
             }
         }
     }
