@@ -13,58 +13,63 @@ struct ResumenView: View {
         
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading) {
-                Text("Week of Nov 11")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                HStack {
-                    Text("Budget")
-                        .font(.title.bold())
-                    Spacer()
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "sun.max")
+            ScrollView {
+                VStack(alignment: .leading) {
+                    Text("Week of Nov 11")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
+                    HStack {
+                        Text("Budget")
+                            .font(.title.bold())
+                        Spacer()
                     }
-                    .buttonStyle(.glass)
-                }
-                .padding(.horizontal)
-                
-                SpentWeekComponent(viewModel: viewModel)
                     .padding(.horizontal)
-                
-                HStack {
-                    HighestSpentComponent(viewModel: viewModel)
-                    DailyAverageView(viewModel: viewModel)
-                }
-                .padding(.horizontal)
-                .frame(maxWidth:.infinity)
-                
-                VStack {
-                    Text("BY CATEGORY")
-                        .font(.callout)
-                        .fontWeight(.semibold)
-                }
-                .padding()
-                
-                CategoryExpendComponent(viewModel: viewModel)
-                
-                Spacer()
-            }
-            .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    Button {
-                        showBudgetFormView = true
-                    } label: {
-                        Image(systemName: "plus")
+                    
+                    SpentWeekComponent(viewModel: viewModel)
+                        .padding(.horizontal)
+                    
+                    HStack {
+                        HighestSpentComponent(viewModel: viewModel)
+                        DailyAverageView(viewModel: viewModel)
                     }
-                    .frame(width: 50, height: 50)
+                    .padding(.horizontal)
+                    .frame(maxWidth:.infinity)
+                    
+                    VStack {
+                        Text("BY CATEGORY")
+                            .font(.callout)
+                            .fontWeight(.semibold)
+                    }
+                    .padding()
+                    
+                    CategoryExpendComponent(viewModel: viewModel)
+                    
+                    VStack {
+                        Text("EXPENSES")
+                            .font(.callout)
+                            .fontWeight(.semibold)
+                    }
+                    .padding()
+                    
+                    ExpenseListComponent(viewModel: viewModel)
+                    
+                    Spacer()
+                }//Vstack
+                .toolbar {
+                    ToolbarItem(placement: .bottomBar) {
+                        Button {
+                            showBudgetFormView = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                        .frame(width: 50, height: 50)
+                    }
                 }
-            }
-            .navigationDestination(isPresented: self.$showBudgetFormView) {
-                BudgetFormView(viewModel: viewModel)
-            }
-        }
+                .navigationDestination(isPresented: self.$showBudgetFormView) {
+                    BudgetFormView(viewModel: viewModel)
+                }
+            } //ScrollView
+        } //NavigationStack
     }
 }
 
