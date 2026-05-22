@@ -9,9 +9,7 @@ import Combine
 import SwiftUI
 
 class NotesViewModel: ObservableObject {
-    @Published var notes: [Note] = [
-        Note(id: UUID(), title: "Nota prueba", body: "", tags: [], createdAt: Date())
-    ]
+    @Published var notes: [Note] = []
     
     private let key = "notas_guardadas"
     
@@ -46,5 +44,6 @@ class NotesViewModel: ObservableObject {
     
     func remove(note: Note) {
         notes.removeAll(where: { $0.id == note.id })
+        save()
     }
 }
