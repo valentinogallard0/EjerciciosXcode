@@ -37,6 +37,13 @@ class NotesViewModel: ObservableObject {
         save()
     }
     
+    func update(note: Note) {
+        if let index = notes.firstIndex(where: { $0.id == note.id }) {
+            notes[index] = note
+            save()
+        }
+    }
+    
     func remove(note: Note) {
         notes.removeAll(where: { $0.id == note.id })
     }

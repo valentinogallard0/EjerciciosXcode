@@ -11,6 +11,7 @@ struct NotesView: View {
     
     @StateObject var viewModel = NotesViewModel()
     @State var showNewNoteScreen: Bool = false
+    @State var selectedNote: Note? = nil
     
     var body: some View {
         NavigationStack {
@@ -18,6 +19,10 @@ struct NotesView: View {
                 List {
                     ForEach(viewModel.notes) { note in
                         NotePreviewComponent(note: note)
+                            .onTapGesture {
+                                self.selectedNote = note
+                                self.showNewNoteScreen = true
+                            }
                             .swipeActions {
                                 Button(role: .destructive) {
                                     self.viewModel.remove(note: note)
@@ -37,6 +42,7 @@ struct NotesView: View {
                                 
                 ToolbarItem(placement: .bottomBar) {
                     Button {
+                        selectedNote = nil
                         self.showNewNoteScreen = true
                     } label: {
                         Image(systemName: "plus")
@@ -44,7 +50,7 @@ struct NotesView: View {
                 }
             }
             .navigationDestination(isPresented: $showNewNoteScreen) {
-                NewNoteView(viewModel: viewModel)
+                NoteFormView(viewModel: viewModel, note: selectedNote)
             }
             
         }

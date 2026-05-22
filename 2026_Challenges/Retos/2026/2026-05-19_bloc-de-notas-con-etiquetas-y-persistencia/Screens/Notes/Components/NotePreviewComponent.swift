@@ -19,11 +19,14 @@ struct NotePreviewComponent: View {
                 Text(note.createdAt.shortDate())
                 if note.body.isEmpty {
                     Text("No hay texto adicional")
+                } else {
+                    Text(note.body)
                 }
             }
             .font(.caption)
             .foregroundColor(.secondary)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
