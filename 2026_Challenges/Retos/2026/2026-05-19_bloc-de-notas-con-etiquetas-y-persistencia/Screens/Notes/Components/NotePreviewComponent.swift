@@ -21,6 +21,7 @@ struct NotePreviewComponent: View {
                     Text("No hay texto adicional")
                 } else {
                     Text(note.body)
+                        .lineLimit(1)
                 }
             }
             .font(.caption)

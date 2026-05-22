@@ -17,20 +17,20 @@ struct NotesView: View {
         NavigationStack {
             VStack {
                 List {
-                    ForEach(viewModel.notes) { note in
-                        NotePreviewComponent(note: note)
-                            .onTapGesture {
-                                self.selectedNote = note
-                                self.showNewNoteScreen = true
+                    ForEach(viewModel.notes.reversed()) { note in
+                        NavigationLink {
+                            NoteFormView(viewModel: viewModel, note: note)
+                        } label: {
+                            NotePreviewComponent(note: note)
+                        }
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                self.viewModel.remove(note: note)
+                            } label: {
+                                Image(systemName: "trash")
+                                Text("Eliminar")
                             }
-                            .swipeActions {
-                                Button(role: .destructive) {
-                                    self.viewModel.remove(note: note)
-                                } label: {
-                                    Image(systemName: "trash")
-                                    Text("Eliminar")
-                                }
-                            }
+                        }
                     }
                 }
             } //VStack
