@@ -19,8 +19,8 @@ struct RepositoryDataSourceRemoteRepository: RepositoryRepository {
         )
         
         let data = try await self.dataSource.execute(endpoint: endpoint)
-        let dtos = try JSONDecoder().decode([RepositoryDTO].self, from: data)
+        let response = try JSONDecoder().decode(RepositorySearchResponseDTO.self, from: data)
         
-        return dtos.map { $0.toEntity() }
+        return response.items.map { $0.toEntity() }
     }
 }

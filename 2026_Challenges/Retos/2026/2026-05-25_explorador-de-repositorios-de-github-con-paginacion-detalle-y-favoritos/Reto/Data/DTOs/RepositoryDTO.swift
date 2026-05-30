@@ -12,6 +12,14 @@ struct RepositoryDTO: Decodable {
     let isPrivate: Bool
     let owner: OwnerDTO
     
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case fullName = "full_name"
+        case isPrivate = "private"
+        case owner
+    }
+    
     func toEntity() -> RepositoryEntity {
         RepositoryEntity(
             id: self.id,

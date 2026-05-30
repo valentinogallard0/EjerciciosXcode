@@ -12,6 +12,6 @@ import Combine
 class GithubViewModel: ObservableObject {
     
     func handleError(_ error: Error) {
-        
+        print(error)
     }
 }

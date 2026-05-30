@@ -24,8 +24,9 @@ final class RepositoryViewModel: GithubViewModel {
         self.repositories = .loading
         
         do {
-            let repos = try await self.getRepositoriesUseCase.execute()
+            let repos = try await self.getRepositoriesUseCase.execute(query: "swiftui", page: 1)
             self.repositories = .success(repos)
+            print("Repos encontrados.")
         } catch {
             self.repositories = .failure(error)
             self.handleError(error)

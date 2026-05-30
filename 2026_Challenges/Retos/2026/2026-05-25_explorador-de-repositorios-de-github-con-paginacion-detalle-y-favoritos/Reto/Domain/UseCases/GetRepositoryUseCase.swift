@@ -8,7 +8,7 @@
 struct GetRepositoryUseCase {
     let repository: RepositoryRepository
     
-    func execute() async throws -> [RepositoryEntity] {
-        try await self.repository.getRepositories(query: "", page: 0)
+    func execute(query: String, page: Int) async throws -> [RepositoryEntity] {
+        try await self.repository.getRepositories(query: query, page: page)
     }
 }

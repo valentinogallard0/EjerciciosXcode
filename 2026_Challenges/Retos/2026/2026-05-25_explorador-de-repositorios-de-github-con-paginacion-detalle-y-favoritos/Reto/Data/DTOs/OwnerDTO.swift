@@ -11,6 +11,13 @@ struct OwnerDTO: Decodable {
     let avatarUrl: String
     let userViewType: String
     
+    enum CodingKeys: String, CodingKey {
+        case login
+        case id
+        case avatarUrl = "avatar_url"
+        case userViewType = "type"
+    }
+    
     func toEntity() -> OwnerEntity {
         OwnerEntity(
             login: self.login,
