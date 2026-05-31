@@ -9,6 +9,20 @@ struct RepositoryEntity {
     let id: Int
     let name: String
     let fullName: String
+    let description: String
     let isPrivate: Bool
+    let laguange: String
     let owner: OwnerEntity
+}
+
+extension RepositoryEntity: Defaultable {
+    static var defaultValue: RepositoryEntity { .init(
+        id: 0,
+        name: "Name test",
+        fullName: "Full name test",
+        description: "This is a description test for deafult value",
+        isPrivate: false,
+        laguange: "Swift",
+        owner: .defaultValue
+    )}
 }

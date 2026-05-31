@@ -8,28 +8,47 @@
 import SwiftUI
 
 struct RepositoriesScreen: View {
+    
     @StateObject var viewModel = RepositoryViewModel()
+
     var body: some View {
-        VStack {
-            switch viewModel.repositories {
-            case .idle:
-                EmptyView()
-            case .loading:
-                ProgressView()
-            case .success(let repos):
-                ForEach(repos, id: \.id) { repo in
-                    Text(repo.name)
+        NavigationStack {
+            GithubAppBackground {
+                VStack {
+                    HStack {
+                        Text("Github")
+                            .foregroundStyle(.white)
+                        Text("Explorer")
+                            .foregroundStyle(.blue)
+                    }
+                    .font(.title.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    
+                    switch viewModel.repositories {
+                    case .idle:
+                        EmptyView()
+                    case .loading:
+                        ProgressView()
+                    case .success(let repos):
+                        ScrollView {
+                            ForEach(repos, id: \.id) { repo in
+                                RepositoryComponent(repository: repo)
+                            }
+                            .padding()
+                        }
+                    case .failure(let error):
+                        Text(error.localizedDescription)
+                    }
                 }
-            case .failure(let error):
-                Text(error.localizedDescription)
+                .task {
+                    await viewModel.loadRepositories()
+                }
             }
-        }
-        .task {
-            await viewModel.loadRepositories()
         }
     }
 }
 
 #Preview {
-    RepositoriesScreen(viewModel: RepositoryViewModel())
+    RepositoriesScreen()
 }

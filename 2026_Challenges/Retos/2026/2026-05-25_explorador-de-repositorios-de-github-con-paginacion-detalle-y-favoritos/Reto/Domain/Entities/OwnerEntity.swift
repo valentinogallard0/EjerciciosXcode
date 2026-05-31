@@ -11,3 +11,12 @@ struct OwnerEntity {
     let avatarUrl: String
     let userViewType: String
 }
+
+extension OwnerEntity: Defaultable {
+    static var defaultValue: OwnerEntity { .init(
+        login: "Login Test",
+        id: 001,
+        avatarUrl: "",
+        userViewType: "User type test"
+    )}
+}
