@@ -10,26 +10,25 @@ import Combine
 
 @MainActor
 final class RepositoryViewModel: GithubViewModel {
-    @Published var repositories: GithubAsyncData<[RepositoryEntity]> = .idle
-    
+    @Published var repositoriesAsyncData: GithubAsyncData<[RepositoryEntity]> = .initial
+
     private let getRepositoriesUseCase: GetRepositoryUseCase
-    
+
     init(
         getRepositoriesUseCase: GetRepositoryUseCase = GithubDependencyInjector.instance.makeGetRepositoriesUseCase()
     ) {
         self.getRepositoriesUseCase = getRepositoriesUseCase
     }
-    
+
     func loadRepositories() async {
-        self.repositories = .loading
-        
+        repositoriesAsyncData = .inProgress()
+
         do {
-            let repos = try await self.getRepositoriesUseCase.execute(query: "swiftui", page: 1)
-            self.repositories = .success(repos)
-            print("Repos encontrados.")
+            let repos = try await getRepositoriesUseCase.execute(query: "swiftui", page: 1)
+            repositoriesAsyncData = .success(data: repos)
         } catch {
-            self.repositories = .failure(error)
-            self.handleError(error)
+            repositoriesAsyncData = .failure(error)
+            handleError(error)
         }
     }
 }

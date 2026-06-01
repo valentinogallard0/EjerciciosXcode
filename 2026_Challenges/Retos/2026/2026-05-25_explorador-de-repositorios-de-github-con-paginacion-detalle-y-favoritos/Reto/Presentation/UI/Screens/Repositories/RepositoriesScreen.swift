@@ -10,6 +10,9 @@ import SwiftUI
 struct RepositoriesScreen: View {
     
     @StateObject var viewModel = RepositoryViewModel()
+    @State var searchText: String = ""
+    @State var isSelectedSearch: Bool = true
+    @State var isSelectedFavorites: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -25,25 +28,48 @@ struct RepositoriesScreen: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                     
-                    GithubAsyncDataView(state: viewModel.repositories) {
-                        ProgressView()
-                            .foregroundStyle(Color.white)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } success: { repos in
-                        ScrollView {
-                            LazyVStack(spacing: 12) {
-                                ForEach(repos, id: \.id) { repo in
-                                    RepositoryComponent(repository: repo)
-                                }
-                            }
-                            .padding()
+                    GithubSearchBar(text: $searchText)
+                        .padding(.horizontal)
+                    
+                    HStack{
+                        GithubMenuButtons(text: "Buscar", isSelected: self.$isSelectedSearch) {
+                            self.isSelectedSearch = true
+                            self.isSelectedFavorites = false
                         }
-                    } failure: { error in
-                        GithubIconAndText(
-                            icon: "exclamationmark.circle.fill",
-                            text: "repository-error".githubLocalizable
-                        )
+                        GithubMenuButtons(text: "Favoritos", isSelected: self.$isSelectedFavorites) {
+                            self.isSelectedFavorites = true
+                            self.isSelectedSearch = false
+                        }
                     }
+                    .padding()
+                    if isSelectedSearch {
+                        let repos = viewModel.repositoriesAsyncData.data ?? []
+
+                        if viewModel.repositoriesAsyncData.isLoading {
+                            ProgressView()
+                                .foregroundStyle(Color.white)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        } else if viewModel.repositoriesAsyncData.hasError {
+                            GithubIconAndText(
+                                icon: "exclamationmark.circle.fill",
+                                text: "repository-error".githubLocalizable
+                            )
+                        } else {
+                            ScrollView {
+                                LazyVStack(spacing: 12) {
+                                    ForEach(repos, id: \.id) { repo in
+                                        RepositoryComponent(repository: repo)
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                        }
+                    } else if isSelectedFavorites {
+                        VStack {
+                            
+                        }
+                    }
+                    Spacer()
                 }
                 .task {
                     await viewModel.loadRepositories()
@@ -52,6 +78,8 @@ struct RepositoriesScreen: View {
         }
     }
 }
+
+
 
 #Preview {
     RepositoriesScreen()

@@ -5,32 +5,38 @@
 //  Created by Valentino De Paola Gallardo on 29/05/26.
 //
 
-import SwiftUI
+import Foundation
 
-enum GithubAsyncData<Value> {
-    case idle
-    case loading
-    case success(Value)
-    case failure(Error)
+struct GithubAsyncData<T> {
+    let data: T?
+    let error: Error?
+    let status: AsyncDataStatus
+
+    var isInitial: Bool  { status == .initial }
+    var isLoading: Bool  { status == .inProgress }
+    var hasData: Bool    { data != nil }
+    var hasError: Bool   { error != nil }
+
+    static var initial: GithubAsyncData<T> {
+        .init(data: nil, error: nil, status: .initial)
+    }
+
+    static func inProgress(data: T? = nil) -> GithubAsyncData<T> {
+        .init(data: data, error: nil, status: .inProgress)
+    }
+
+    static func success(data: T) -> GithubAsyncData<T> {
+        .init(data: data, error: nil, status: .success)
+    }
+
+    static func failure(_ error: Error) -> GithubAsyncData<T> {
+        .init(data: nil, error: error, status: .failure)
+    }
 }
 
-struct GithubAsyncDataView<Value, Content: View, LoadingContent: View, FailureContent: View>: View {
-    
-    let state: GithubAsyncData<Value>
-    let loading: () -> LoadingContent
-    let success: (Value) -> Content
-    let failure: (Error) -> FailureContent
-    
-    var body: some View {
-        switch state {
-        case .idle:
-            EmptyView()
-        case .loading:
-            loading()
-        case .success(let value):
-            success(value)
-        case .failure(let error):
-            failure(error)
-        }
-    }
+enum AsyncDataStatus {
+    case initial
+    case inProgress
+    case success
+    case failure
 }
