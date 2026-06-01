@@ -9,9 +9,9 @@ struct RepositoryDTO: Decodable {
     let id: Int
     let name: String
     let fullName: String
-    let description: String
+    let description: String?
     let isPrivate: Bool
-    let language: String
+    let language: String?
     let owner: OwnerDTO
     
     enum CodingKeys: String, CodingKey {
@@ -29,9 +29,9 @@ struct RepositoryDTO: Decodable {
             id: self.id,
             name: self.name,
             fullName: self.fullName,
-            description: self.description,
+            description: self.description ?? "",
             isPrivate: self.isPrivate,
-            language: self.language,
+            language: self.language ?? "",
             owner: self.owner.toEntity()
         )
     }

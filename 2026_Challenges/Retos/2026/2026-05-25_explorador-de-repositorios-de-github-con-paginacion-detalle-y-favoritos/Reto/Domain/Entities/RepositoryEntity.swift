@@ -11,7 +11,7 @@ struct RepositoryEntity {
     let fullName: String
     let description: String
     let isPrivate: Bool
-    let laguange: String
+    let language: String
     let owner: OwnerEntity
 }
 
@@ -22,7 +22,7 @@ extension RepositoryEntity: Defaultable {
         fullName: "Full name test",
         description: "This is a description test for deafult value",
         isPrivate: false,
-        laguange: "Swift",
+        language: "Swift",
         owner: .defaultValue
     )}
 }
