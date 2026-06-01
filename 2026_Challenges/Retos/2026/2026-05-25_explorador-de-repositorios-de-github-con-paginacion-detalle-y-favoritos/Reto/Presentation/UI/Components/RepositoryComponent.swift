@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct RepositoryComponent: View {
     
@@ -14,6 +15,14 @@ struct RepositoryComponent: View {
     var body: some View {
         GithubAppBackground {
             HStack {
+                KFImage(URL(string: repository.owner.avatarUrl))
+                    .placeholder {
+                        ProgressView()
+                    }
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .frame(width: 70, height: 70)
                 VStack(alignment: .leading) {
                     HStack {
                         Text("\(repository.fullName)")
@@ -29,9 +38,37 @@ struct RepositoryComponent: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .trailing)
                     }
+                    
                     Text("\(repository.description)")
                         .foregroundStyle(Color.gray)
                         .lineLimit(2)
+                    
+                    HStack {
+                        GithubIconAndText(
+                            icon: "circle.fill",
+                            text: "\(self.repository.language)",
+                            isLabel: true,
+                            iconColor: randomColor()
+                        )
+                        Spacer()
+                        
+                        GithubIconAndText(
+                            icon: "star",
+                            text: "\(self.repository.starGazersCount)",
+                            isLabel: true,
+                            iconColor: .gray
+                        )
+                        Spacer()
+                        
+                        GithubIconAndText(
+                            icon: "point.3.connected.trianglepath.dotted",
+                            text: "\(self.repository.forksCount)",
+                            isLabel: true,
+                            iconColor: .gray
+                        )
+                        
+                        Spacer()
+                    }
                 }
             }
             .padding()
@@ -45,6 +82,14 @@ struct RepositoryComponent: View {
             }
             
         }
+    }
+    
+    private func randomColor() -> Color {
+        Color(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1)
+        )
     }
 }
 

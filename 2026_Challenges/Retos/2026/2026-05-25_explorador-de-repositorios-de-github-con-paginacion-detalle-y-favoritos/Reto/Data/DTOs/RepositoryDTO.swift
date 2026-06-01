@@ -13,6 +13,9 @@ struct RepositoryDTO: Decodable {
     let isPrivate: Bool
     let language: String?
     let owner: OwnerDTO
+    let starGazersCount: Int
+    let forksCount: Int
+    
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -22,6 +25,8 @@ struct RepositoryDTO: Decodable {
         case isPrivate = "private"
         case language
         case owner
+        case starGazersCount = "stargazers_count"
+        case forksCount = "forks_count"
     }
     
     func toEntity() -> RepositoryEntity {
@@ -32,7 +37,9 @@ struct RepositoryDTO: Decodable {
             description: self.description ?? "",
             isPrivate: self.isPrivate,
             language: self.language ?? "",
-            owner: self.owner.toEntity()
+            owner: self.owner.toEntity(),
+            starGazersCount: self.starGazersCount,
+            forksCount: self.forksCount
         )
     }
 }

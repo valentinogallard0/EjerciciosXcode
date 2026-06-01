@@ -13,6 +13,8 @@ struct RepositoryEntity {
     let isPrivate: Bool
     let language: String
     let owner: OwnerEntity
+    let starGazersCount: Int
+    let forksCount: Int
 }
 
 extension RepositoryEntity: Defaultable {
@@ -23,6 +25,8 @@ extension RepositoryEntity: Defaultable {
         description: "This is a description test for deafult value",
         isPrivate: false,
         language: "Swift",
-        owner: .defaultValue
+        owner: .defaultValue,
+        starGazersCount: 500,
+        forksCount: 100
     )}
 }

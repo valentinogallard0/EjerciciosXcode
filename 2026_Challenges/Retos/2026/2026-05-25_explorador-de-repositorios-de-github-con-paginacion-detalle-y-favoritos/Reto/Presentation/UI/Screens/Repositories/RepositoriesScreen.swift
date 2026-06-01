@@ -16,29 +16,33 @@ struct RepositoriesScreen: View {
             GithubAppBackground {
                 VStack {
                     HStack {
-                        Text("Github")
+                        Text("github-title".githubLocalizable)
                             .foregroundStyle(.white)
-                        Text("Explorer")
+                        Text("github-title2".githubLocalizable)
                             .foregroundStyle(.blue)
                     }
                     .font(.title.bold())
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                     
-                    switch viewModel.repositories {
-                    case .idle:
-                        EmptyView()
-                    case .loading:
+                    GithubAsyncDataView(state: viewModel.repositories) {
                         ProgressView()
-                    case .success(let repos):
+                            .foregroundStyle(Color.white)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } success: { repos in
                         ScrollView {
-                            ForEach(repos, id: \.id) { repo in
-                                RepositoryComponent(repository: repo)
+                            LazyVStack(spacing: 12) {
+                                ForEach(repos, id: \.id) { repo in
+                                    RepositoryComponent(repository: repo)
+                                }
                             }
                             .padding()
                         }
-                    case .failure(let error):
-                        Text(error.localizedDescription)
+                    } failure: { error in
+                        GithubIconAndText(
+                            icon: "exclamationmark.circle.fill",
+                            text: "repository-error".githubLocalizable
+                        )
                     }
                 }
                 .task {
