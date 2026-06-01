@@ -10,7 +10,6 @@ import SwiftUI
 struct RepositoriesScreen: View {
     
     @StateObject var viewModel = RepositoryViewModel()
-    @State var searchText: String = ""
     @State var isSelectedSearch: Bool = true
     @State var isSelectedFavorites: Bool = false
 
@@ -28,7 +27,7 @@ struct RepositoriesScreen: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                     
-                    GithubSearchBar(text: $searchText)
+                    GithubSearchBar(input: self.$viewModel.searchText)
                         .padding(.horizontal)
                     
                     HStack{
@@ -70,9 +69,6 @@ struct RepositoriesScreen: View {
                         }
                     }
                     Spacer()
-                }
-                .task {
-                    await viewModel.loadRepositories()
                 }
             }
         }

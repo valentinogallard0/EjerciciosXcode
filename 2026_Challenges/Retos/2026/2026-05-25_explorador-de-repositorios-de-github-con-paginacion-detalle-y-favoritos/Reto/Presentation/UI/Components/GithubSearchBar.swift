@@ -11,7 +11,7 @@ struct GithubSearchBar: View {
     
     let icon: String = "magnifyingglass"
     let placeholder: String = "Buscar repositorios..."
-    @Binding var text: String
+    @Binding var input: String
     
     var body: some View {
         HStack {
@@ -19,7 +19,7 @@ struct GithubSearchBar: View {
                 .foregroundColor(.gray)
                 .padding()
                 
-            TextField(self.placeholder, text: self.$text, prompt: Text(self.placeholder).foregroundColor(.gray))
+            TextField(self.placeholder, text: self.$input, prompt: Text(self.placeholder).foregroundColor(.gray))
                 .foregroundStyle(.gray)
         }
         .background(
@@ -34,5 +34,5 @@ struct GithubSearchBar: View {
 }
 
 #Preview {
-    GithubSearchBar(text: .constant(""))
+    GithubSearchBar(input: .constant(""))
 }

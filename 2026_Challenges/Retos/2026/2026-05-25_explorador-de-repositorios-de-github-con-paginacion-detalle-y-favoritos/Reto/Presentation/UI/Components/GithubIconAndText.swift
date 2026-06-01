@@ -50,6 +50,7 @@ struct GithubIconAndText: View {
                         .foregroundStyle(Color.white)
                         .lineLimit(1)
                 }
+                .frame(maxWidth: .infinity)
                 .clipShape(Capsule())
             }
         }

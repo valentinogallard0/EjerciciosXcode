@@ -24,6 +24,8 @@ struct HttpDataSource: DataSource {
         }
         
         guard(200...299).contains(httpResponse.statusCode) else {
+            print(httpResponse.statusCode)
+            print(String(data: data, encoding: .utf8) ?? "")
             throw GithubRepositoryError.invalidResponse
         }
         

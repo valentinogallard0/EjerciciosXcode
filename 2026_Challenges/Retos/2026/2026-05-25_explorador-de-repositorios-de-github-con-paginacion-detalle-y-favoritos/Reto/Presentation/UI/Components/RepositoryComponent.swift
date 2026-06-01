@@ -44,21 +44,20 @@ struct RepositoryComponent: View {
                         .lineLimit(2)
                     
                     HStack {
-                        GithubIconAndText(
-                            icon: "circle.fill",
-                            text: "\(self.repository.language)",
-                            isLabel: true,
-                            iconColor: randomColor()
-                        )
-                        Spacer()
-                        
+                        if !repository.language.isEmpty {
+                            GithubIconAndText(
+                                icon: "circle.fill",
+                                text: "\(self.repository.language)",
+                                isLabel: true,
+                                iconColor: randomColor()
+                            )
+                        }
                         GithubIconAndText(
                             icon: "star",
                             text: "\(self.repository.starGazersCount)",
                             isLabel: true,
                             iconColor: .gray
                         )
-                        Spacer()
                         
                         GithubIconAndText(
                             icon: "point.3.connected.trianglepath.dotted",
@@ -67,7 +66,6 @@ struct RepositoryComponent: View {
                             iconColor: .gray
                         )
                         
-                        Spacer()
                     }
                 }
             }
