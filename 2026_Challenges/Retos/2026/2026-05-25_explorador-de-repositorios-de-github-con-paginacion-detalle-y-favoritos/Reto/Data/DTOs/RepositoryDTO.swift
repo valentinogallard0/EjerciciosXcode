@@ -15,6 +15,7 @@ struct RepositoryDTO: Decodable {
     let owner: OwnerDTO
     let starGazersCount: Int
     let forksCount: Int
+    let htmlURL: String?
     
     
     enum CodingKeys: String, CodingKey {
@@ -27,6 +28,7 @@ struct RepositoryDTO: Decodable {
         case owner
         case starGazersCount = "stargazers_count"
         case forksCount = "forks_count"
+        case htmlURL = "html_url"
     }
     
     func toEntity() -> RepositoryEntity {
@@ -39,7 +41,8 @@ struct RepositoryDTO: Decodable {
             language: self.language ?? "",
             owner: self.owner.toEntity(),
             starGazersCount: self.starGazersCount,
-            forksCount: self.forksCount
+            forksCount: self.forksCount,
+            htmlURL: self.htmlURL ?? ""
         )
     }
 }

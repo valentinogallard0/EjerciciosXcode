@@ -15,6 +15,7 @@ struct RepositoryEntity {
     let owner: OwnerEntity
     let starGazersCount: Int
     let forksCount: Int
+    let htmlURL: String?
 }
 
 extension RepositoryEntity: Defaultable {
@@ -27,6 +28,7 @@ extension RepositoryEntity: Defaultable {
         language: "Swift",
         owner: .defaultValue,
         starGazersCount: 500,
-        forksCount: 100
+        forksCount: 100,
+        htmlURL: ""
     )}
 }

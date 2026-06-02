@@ -10,21 +10,36 @@ import SwiftUI
 struct GithubIconAndText: View {
     
     let icon: String?
+    let image: String?
     let text: String?
-    let isWarning: Bool?
+    let description: String?
+    let isWarningWithIcon: Bool?
+    let isWarningWithImage: Bool?
     let isLabel: Bool?
     let iconColor: Color?
     
-    init(icon: String? = nil, text: String? = nil, isWarning: Bool? = nil, isLabel: Bool? = nil, iconColor: Color? = nil) {
+    init(
+        icon: String? = nil,
+        image: String? = nil,
+        text: String? = nil,
+        description: String? = nil,
+        isWarningWithIcon: Bool? = nil,
+        isWarningWithImage: Bool? = nil,
+        isLabel: Bool? = nil,
+        iconColor: Color? = nil
+    ) {
         self.icon = icon
+        self.image = image
         self.text = text
-        self.isWarning = isWarning
+        self.description = description
+        self.isWarningWithIcon = isWarningWithIcon
+        self.isWarningWithImage = isWarningWithImage
         self.isLabel = isLabel
         self.iconColor = iconColor
     }
     
     var body: some View {
-        if self.isWarning == true {
+        if self.isWarningWithIcon == true {
             if let icon = self.icon, let text = self.text {
                 VStack(alignment: .center, spacing: 15) {
                     Image(systemName: icon)
@@ -43,6 +58,7 @@ struct GithubIconAndText: View {
                 HStack {
                     Image(systemName: icon)
                         .resizable()
+                        .scaledToFit()
                         .frame(width: 22, height: 22)
                         .foregroundStyle(self.iconColor ?? .gray)
                     Text(text)
@@ -52,6 +68,28 @@ struct GithubIconAndText: View {
                 }
                 .frame(maxWidth: .infinity)
                 .clipShape(Capsule())
+            }
+        } else if self.isWarningWithImage == true {
+            if let image = self.image, let text = self.text, let description = self.description {
+                VStack(alignment: .center, spacing: 15) {
+                    Image(image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 350)
+                    
+                    Text(text)
+                        .font(.title.bold())
+                        .foregroundStyle(Color.white)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                    
+                    Text(description)
+                        .font(.body)
+                        .foregroundStyle(Color.gray)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                        
+                }
             }
         }
     }

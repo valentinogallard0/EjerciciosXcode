@@ -53,11 +53,17 @@ struct RepositoriesScreen: View {
                                 icon: "exclamationmark.circle.fill",
                                 text: "repository-error".githubLocalizable
                             )
-                        } else {
+                        } else if viewModel.repositoriesAsyncData.isInitial {
+                            GithubIconAndText(image: "emptyStateGithub", text: "No encontramos repositorios.", description: "Intenta con otro termino de busqueda.", isWarningWithImage: true)
+                        }  else {
                             ScrollView {
                                 LazyVStack(spacing: 12) {
                                     ForEach(repos, id: \.id) { repo in
-                                        RepositoryComponent(repository: repo)
+                                        NavigationLink{
+                                            DetailRepositoryScreen(repository: repo)
+                                        } label: {
+                                            RepositoryComponent(repository: repo)
+                                        }
                                     }
                                 }
                                 .padding(.horizontal)

@@ -12,7 +12,7 @@ import SwiftData
 struct _026_ChallengesApp: App {
     var body: some Scene {
         WindowGroup {
-            SplashView()
+            RepositoriesScreen()
         }
         //.modelContainer(for: [Habit.self, HabitEntry.self])
     }
