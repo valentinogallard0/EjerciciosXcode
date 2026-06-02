@@ -11,6 +11,8 @@ import Kingfisher
 struct RepositoryComponent: View {
     
     let repository: RepositoryEntity
+    let isFavorite: Bool
+    var onTap: () -> Void
     
     var body: some View {
         GithubAppBackground {
@@ -30,9 +32,9 @@ struct RepositoryComponent: View {
                             .font(.title3.bold())
                             .lineLimit(1)
                         Button {
-                            
+                            self.onTap()
                         } label: {
-                            Image(systemName: "heart")
+                            Image(systemName: isFavorite ? "heart.fill" : "heart")
                                 .foregroundStyle(Color.red)
                                 .font(.title2)
                         }
@@ -92,5 +94,10 @@ struct RepositoryComponent: View {
 }
 
 #Preview {
-    RepositoryComponent(repository: RepositoryEntity.defaultValue)
+    RepositoryComponent(
+        repository: RepositoryEntity.defaultValue,
+        isFavorite: false
+    ) {
+        
+    }
 }

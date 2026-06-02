@@ -12,6 +12,7 @@ import Combine
 final class RepositoryViewModel: GithubViewModel {
     @Published var repositoriesAsyncData: GithubAsyncData<[RepositoryEntity]> = .initial
     @Published var searchText: String = ""
+    @Published var favoritesRepositories: [RepositoryEntity] = []
 
     private let getRepositoriesUseCase: GetRepositoryUseCase
     private var cancellables = Set<AnyCancellable>()
@@ -55,5 +56,17 @@ final class RepositoryViewModel: GithubViewModel {
             repositoriesAsyncData = .failure(error)
             handleError(error)
         }
+    }
+    
+    func addToFavorites(repository: RepositoryEntity) {
+        if favoritesRepositories.contains(where: { $0.id == repository.id }) {
+            favoritesRepositories.removeAll() { $0.id == repository.id }
+        } else {
+            favoritesRepositories.append(repository)
+        }
+    }
+    
+    func isFavorite(repository: RepositoryEntity) -> Bool {
+        favoritesRepositories.contains(where: { $0.id == repository.id})
     }
 }

@@ -54,7 +54,12 @@ struct RepositoriesScreen: View {
                                 text: "repository-error".githubLocalizable
                             )
                         } else if viewModel.repositoriesAsyncData.isInitial {
-                            GithubIconAndText(image: "emptyStateGithub", text: "No encontramos repositorios.", description: "Intenta con otro termino de busqueda.", isWarningWithImage: true)
+                            GithubIconAndText(
+                                image: "emptyStateGithub",
+                                text: "No encontramos repositorios.",
+                                description: "Intenta con otro termino de busqueda.",
+                                isWarningWithImage: true
+                            )
                         }  else {
                             ScrollView {
                                 LazyVStack(spacing: 12) {
@@ -62,7 +67,12 @@ struct RepositoriesScreen: View {
                                         NavigationLink{
                                             DetailRepositoryScreen(repository: repo)
                                         } label: {
-                                            RepositoryComponent(repository: repo)
+                                            RepositoryComponent(
+                                                repository: repo,
+                                                isFavorite: self.viewModel.isFavorite(repository: repo)
+                                            ) {
+                                                self.viewModel.addToFavorites(repository: repo)
+                                            }
                                         }
                                     }
                                 }
@@ -70,8 +80,32 @@ struct RepositoriesScreen: View {
                             }
                         }
                     } else if isSelectedFavorites {
-                        VStack {
-                            
+                        if self.viewModel.favoritesRepositories.isEmpty {
+                            GithubIconAndText(
+                                image: "empty-state-favorites",
+                                text: "Aun no tienes favoritos",
+                                description: "Marca repositorios que te interesen para verlos aqui.",
+                                isWarningWithImage: true
+                            )
+                        } else {
+                            let favoritesRepos = self.viewModel.favoritesRepositories
+                            ScrollView {
+                                LazyVStack(spacing: 12) {
+                                    ForEach(favoritesRepos, id: \.id) { repo in
+                                        NavigationLink{
+                                            DetailRepositoryScreen(repository: repo)
+                                        } label: {
+                                            RepositoryComponent(
+                                                repository: repo,
+                                                isFavorite: self.viewModel.isFavorite(repository: repo)
+                                            ) {
+                                                self.viewModel.addToFavorites(repository: repo)
+                                            }
+                                        }
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
                         }
                     }
                     Spacer()
