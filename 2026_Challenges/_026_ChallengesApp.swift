@@ -12,7 +12,16 @@ import SwiftData
 struct _026_ChallengesApp: App {
     var body: some Scene {
         WindowGroup {
-            RepositoriesScreen()
+            let repository = TipConfigRepositoryImpl()
+            let useCase = CalculateTipSplitUseCaseImpl()
+            let viewModel = TipSplitViewModel(
+                calculateUseCase: useCase,
+                configRepository: repository
+            )
+            TipSplitView(viewModel: viewModel)
+            
+            
+            //RepositoriesScreen()
         }
         //.modelContainer(for: [Habit.self, HabitEntry.self])
     }
