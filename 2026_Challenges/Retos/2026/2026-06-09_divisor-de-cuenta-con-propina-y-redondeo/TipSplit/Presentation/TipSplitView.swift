@@ -15,6 +15,8 @@ struct TipSplitView: View {
         VStack {
             customTextField
             tipsFieldComponent
+            splittedPeople
+            Spacer()
         }
     }
     
@@ -57,6 +59,46 @@ struct TipSplitView: View {
                 }
             }
             .pickerStyle(.segmented)
+        }
+        .padding()
+    }
+    
+    private var splittedPeople: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text("Dividir entre")
+                if self.viewModel.numberOfPeople > 1 {
+                    Text("\(self.viewModel.numberOfPeople) persona")
+                } else {
+                    Text("\(self.viewModel.numberOfPeople) personas")
+                }
+            }
+            
+            Spacer()
+            
+            HStack {
+                Button {
+                    
+                } label: {
+                    Text("-")
+                }
+                
+                Text("\(self.viewModel.numberOfPeople)")
+                    .padding(.horizontal)
+                
+                Button {
+                    
+                } label: {
+                    Text("+")
+                }
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(lineWidth: 0.5)
+            )
+
+            
         }
         .padding()
     }
