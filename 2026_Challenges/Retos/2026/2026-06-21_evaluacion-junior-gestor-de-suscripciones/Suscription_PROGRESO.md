@@ -10,7 +10,7 @@
 ## Bitácora por mini-reto
 
 ### Mini-reto 1 — Modelo de dominio
-- Tiempo usado: 22 minutos
+- Tiempo usado: 20 minutos
 - Decisiones:
     - Se creo carpeta Models para tener bien separado los modelos que se van a usar. 
     - en cycle y category se utilizaron como enums, en ambos se utilizo Codable ya que Suscription es Codable y necesita que todo lo que este dentro de el tambien lo sea. 
@@ -19,8 +19,10 @@
     - De momento no tuvimos ningun bloqueo, al principio tal ves la variable computada la habia realizado de una forma diferente y no utilizando un switch pero ya al final creo que escogi el caminio mas leible y optimo
 
 ### Mini-reto 2 — Lista + ViewModel
-- Tiempo usado:
+- Tiempo usado: 16 minutos
 - Decisiones:
+    - Se utilizaron datos mock dentro de la variable en el viewModel que almacena las subs, despues se pasaran a otro lado para facilitar test y no contaminar datos reales. 
+    - El calculo del costo total mensual se hizo en el view model para no contaminar la view, se utilizo con .reduce que resulta perfecto para este tipo de casos ya que este trabaja con arrays y se encarga de devolver una suma total de algo dentro de ese array, itera uno por uno y va sumando eso que quieres que sume.  
 - Bloqueos:
 
 ### Mini-reto 3 — Alta con validación
