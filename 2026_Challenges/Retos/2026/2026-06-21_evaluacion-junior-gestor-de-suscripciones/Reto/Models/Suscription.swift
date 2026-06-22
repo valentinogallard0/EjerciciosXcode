@@ -13,7 +13,7 @@ struct Suscription: Identifiable, Codable {
     var cycle: BillingCycle
     var category: SuscriptionCategory
     var newRenewalDate: Date
-    var isActive: Bool
+    var isActive: Bool = true
     
     var monthlyCost: Decimal {
         switch cycle {

@@ -5,7 +5,14 @@
 //  Created by Valentino De Paola Gallardo on 21/06/26.
 //
 
-enum BillingCycle: Codable {
+enum BillingCycle: Codable, CaseIterable {
     case monthly
     case annual
+    
+    var name: String {
+        switch self {
+        case .monthly: return "Monthly"
+        case .annual: return "Annual"
+        }
+    }
 }

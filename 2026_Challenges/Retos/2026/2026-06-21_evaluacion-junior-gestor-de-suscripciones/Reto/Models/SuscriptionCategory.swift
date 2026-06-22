@@ -14,4 +14,17 @@ enum SuscriptionCategory: CaseIterable, Codable {
     case movies
     case videogames
     case others
+    
+    var name: String {
+        switch self {
+        case .music: return "Music"
+        case .gym: return "Gym"
+        case .streaming: return "Streaming"
+        case .books: return "Books"
+        case .courses: return "Courses"
+        case .movies: return "Movies"
+        case .videogames: return "Video Games"
+        case .others: return "Others"
+        }
+    }
 }
