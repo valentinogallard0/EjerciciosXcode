@@ -18,8 +18,11 @@ class SubscriptionViewModel: ObservableObject {
         Suscription(name: "Apple Music", price: 999, cycle: .annual, category: .music, newRenewalDate: Date())
 
     ]
+    @Published var selectedCategory: SuscriptionCategory? = nil
+    @Published var filterGreaterToLower: Bool = false
     @Published var errorNameIsEmpty: String? = nil
     @Published var errorPriceIsCero: String? = nil
+    @Published var searchText: String = ""
     
     var totalSubsMontlyCost: Decimal {
         return subscriptions.reduce(0) { $0 + $1.monthlyCost }
@@ -46,5 +49,23 @@ class SubscriptionViewModel: ObservableObject {
         self.subscriptions.append(newSub)
         self.errorNameIsEmpty = nil
         self.errorPriceIsCero = nil
+    }
+    
+    func searchResult(category: String? = nil) -> [Suscription] {
+        var subs = subscriptions
+        
+        if selectedCategory != nil {
+            subs = subs.filter { $0.category == selectedCategory }
+        }
+        
+        if self.filterGreaterToLower {
+            subs = subs.sorted { $0.price > $1.price }
+        }
+        
+        if searchText.isEmpty {
+            return subs
+        } else {
+            return subs.filter { $0.name.localizedCaseInsensitiveContains(searchText)}
+        }
     }
 }
